@@ -5,10 +5,10 @@ import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 
 val conf = new SparkConf()
-	.setMaster('local[*]')
-    .set("spark.driver.memory", "32g")
-	.set("spark.executor.memory", "8g")
-	.set("spark.driver.allowMultipleContexts", "true"))
+.setMaster('local[*]')
+.set("spark.driver.memory", "32g")
+.set("spark.executor.memory", "8g")
+.set("spark.driver.allowMultipleContexts", "true"))
 val sc = new SparkContext(conf)
 
 // spark/train_triplets.txt
