@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Music Recommendation System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {font-family: "Lato", sans-serif}
+        .mySlides {display: none}
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="w3-top">
+    <div class="w3-bar w3-black w3-card-2">
+        <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)"
+           onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+        <a href="#" class="w3-bar-item w3-button w3-padding-large">HOME</a>
+        <a href="#magic" class="w3-bar-item w3-button w3-padding-large w3-hide-small">ALGORITHM</a>
+        <a href="#recommand" class="w3-bar-item w3-button w3-padding-large w3-hide-small">RECOMMAND</a>
+    </div>
+</div>
+<!-- Page content -->
+<div class="w3-content" style="max-width:2000px;margin-top:46px">
+
+    <!-- Automatic Slideshow Images -->
+    {% load static %}
+    <div class="mySlides w3-display-container w3-center">
+        <img src="{% static "music/1.jpg" %}" style="width:100%">
+        <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+            <h3>Music</h3>
+            <p><b>Based on your history</b></p>
+        </div>
+    </div>
+    <div class="mySlides w3-display-container w3-center">
+        <img src="{% static "music/2.jpg" %}" style="width:100%">
+        <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+            <h3>Recommedation</h3>
+            <p><b>We recommend new songs</b></p>
+        </div>
+    </div>
+    <div class="mySlides w3-display-container w3-center">
+        <img src="{% static "music/3.jpg" %}" style="width:100%">
+        <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+            <h3>Enjoy</h3>
+            <p><b>Do you like it</b></p>
+        </div>
+    </div>
+
+    <!-- The INTRO Section -->
+    <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="magic">
+        <h2 class="w3-wide">THE MAGIC</h2>
+        <p class="w3-opacity"><i>3 Computing Approach</i></p>
+        <p class="w3-justify">We have use 3 different computing techniques.
+            Local sequential python, Mahout, and Spark. We tried different recommendation algorithm: user based, item based, and ALS. ALS is chosen for presenting music recommendation system</p>
+        <div class="w3-row w3-padding-32">
+            <div class="w3-third">
+                <p>PYTHON</p>
+                <img src="https://ee5817f8e2e9a2e34042-3365e7f0719651e5b8d0979bce83c558.ssl.cf5.rackcdn.com/python.png"
+                     class="w3-round w3-margin-bottom" alt="Random Name" style="width:60%">
+            </div>
+            <div class="w3-third">
+                <p>MAHOUT</p>
+                <img src="https://mapr.com/products/product-overview/apache-mahout/assets/apache-mahout-image.png"
+                     class="w3-round w3-margin-bottom" alt="Random Name" style="width:60%">
+            </div>
+            <div class="w3-third">
+                <p>PYSPARK</p>
+                <img src="http://spark.apache.org/images/spark-logo-trademark.png"
+                     class="w3-round" alt="Random Name" style="width:60%">
+            </div>
+        </div>
+    </div>
+    <!-- The ACTUAL Section -->
+    <div class="w3-container w3-content w3-padding-64" style="max-width:600px" id="recommand">
+        <form action={% url 'music:favorite'%} method="POST">
+            <table class=".table-hover" align="left">
+                <td><h2>Recommendation Songs for Users</h2></td>
+                <tr>
+                <th>User</th>
+                <th><input type="text" name="user" />&nbsp;</th>
+                </tr>
+                <tr>
+                    <th>Number of Recommendation:</th>
+                    <th><input type="text" name="recomm" />&nbsp;</th>
+                </tr>
+                <tr>
+                    <th><input type="submit" class="btn btn-primary pull-right" value="Run"></input></th>
+                </tr>
+            </table>
+            {% csrf_token %}
+        </form>
+        {{ results|linebreaks}}
+    </div>
+
+    <!-- End Page Content -->
+</div>
+
+<script>
+    // Automatic Slideshow - change image every 4 seconds
+    var myIndex = 0;
+    carousel();
+
+    function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        myIndex++;
+        if (myIndex > x.length) {myIndex = 1}
+        x[myIndex-1].style.display = "block";
+        setTimeout(carousel, 4000);
+    }
+
+    // Used to toggle the menu on small screens when clicking on the menu button
+    function myFunction() {
+        var x = document.getElementById("navDemo");
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+        }
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    var modal = document.getElementById('ticketModal');
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
+</body>
+</html>
